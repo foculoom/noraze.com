@@ -24,6 +24,12 @@ Noraze covers four content pillars:
 - `jekyll-feed` (RSS) and `jekyll-seo-tag` (meta tags) plugins
 - Hosted on GitHub Pages (builds on push to `main`, no CI workflow needed)
 - Custom domain: noraze.com (CNAME)
+- Mindmap toggle on every post (client-side, CDN-loaded):
+  [`markmap`](https://markmap.js.org) v0.18.12 via jsdelivr, loaded lazily on
+  first toggle. Markdown stays canonical; the mindmap is auto-derived from
+  each post's H2/H3 headings. A post may opt out by setting `mindmap: false`
+  in its front matter. See `_includes/custom-head.html` and
+  `assets/js/mindmap.js`.
 
 ## Local preview (optional)
 
