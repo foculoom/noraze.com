@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0d1117"/>
+  <!-- Accent bar -->
+  <rect x="0" y="0" width="8" height="630" fill="#58a6ff"/>
+  <!-- Terminal prompt decoration -->
+  <text x="60" y="260" font-family="monospace" font-size="48" fill="#3fb950" opacity="0.6">$</text>
+  <!-- Main title -->
+  <text x="108" y="260" font-family="monospace" font-size="48" fill="#e6edf3" font-weight="bold">gh copilot suggest</text>
+  <!-- Subtitle -->
+  <text x="60" y="340" font-family="monospace" font-size="30" fill="#8b949e">"AI Productivity for CLI-First Developers"</text>
+  <!-- Blog label -->
+  <text x="60" y="430" font-family="sans-serif" font-size="22" fill="#58a6ff">CLI-First Developer Blog</text>
+  <!-- URL hint -->
+  <text x="60" y="570" font-family="monospace" font-size="18" fill="#484f58">kernel.page</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" role="img" aria-labelledby="t3 d3">
+  <title id="t3">Kafka SASL/OAUTHBEARER handshake and failure points</title>
+  <desc id="d3">Timeline of the Kafka OAuth handshake: Spark client login module acquires a token, connects to broker with SASL_SSL/OAUTHBEARER, broker validates the JWT, and the background refresh thread renews before expiry — with the three failure points: token acquisition, broker rejection, and refresh failure.</desc>
+  <defs>
+    <marker id="arr3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="900" height="460" fill="#fafafa"/>
+  <!-- swimlanes -->
+  <g font-family="-apple-system, sans-serif" font-size="12" font-weight="700" fill="#0f172a">
+    <text x="110" y="30" text-anchor="middle">Spark client</text>
+    <text x="370" y="30" text-anchor="middle">Auth server (AAD)</text>
+    <text x="630" y="30" text-anchor="middle">Kafka broker</text>
+  </g>
+  <g stroke="#e5e7eb" stroke-width="1" stroke-dasharray="4 4">
+    <line x1="220" y1="40" x2="220" y2="430"/>
+    <line x1="480" y1="40" x2="480" y2="430"/>
+  </g>
+  <line x1="50" y1="40" x2="50" y2="430" stroke="#e5e7eb" stroke-dasharray="4 4"/>
+  <line x1="780" y1="40" x2="780" y2="430" stroke="#e5e7eb" stroke-dasharray="4 4"/>
+  <!-- step 1: token acquisition -->
+  <g stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arr3)">
+    <path d="M110,60 L370,60"/>
+  </g>
+  <text x="240" y="54" font-family="-apple-system, sans-serif" font-size="10" fill="#0f172a">1. login callback handler requests token</text>
+  <g stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arr3)">
+    <path d="M370,90 L110,90"/>
+  </g>
+  <text x="180" y="84" font-family="-apple-system, sans-serif" font-size="10" fill="#0f172a">2. JWT (exp, scope, sub claim)</text>
+  <!-- failure 1 -->
+  <rect x="20" y="105" width="220" height="44" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="130" y="122" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" fill="#b91c1c">Failure 1: token acquisition</text>
+  <text x="130" y="138" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="9" fill="#7f1d1d">callback handler null / wrong audience</text>
+  <!-- step 3: SASL connect -->
+  <g stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arr3)">
+    <path d="M110,170 L630,170"/>
+  </g>
+  <text x="320" y="164" font-family="-apple-system, sans-serif" font-size="10" fill="#0f172a">3. SASL_SSL + OAUTHBEARER, sends JWT</text>
+  <!-- step 4: validate -->
+  <g stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arr3)">
+    <path d="M630,200 L110,200"/>
+  </g>
+  <text x="330" y="194" font-family="-apple-system, sans-serif" font-size="10" fill="#0f172a">4. broker validates signature, exp, scope → Principal</text>
+  <!-- failure 2 -->
+  <rect x="540" y="215" width="240" height="44" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="660" y="232" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" fill="#b91c1c">Failure 2: broker rejects token</text>
+  <text x="660" y="248" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="9" fill="#7f1d1d">clock skew / wrong scope / wrong claim</text>
+  <!-- step 5: stream runs -->
+  <text x="110" y="290" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10" fill="#16a34a">stream runs…</text>
+  <line x1="110" y1="270" x2="110" y2="310" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <!-- step 6: refresh -->
+  <g stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arr3)">
+    <path d="M110,330 L370,330"/>
+  </g>
+  <text x="220" y="324" font-family="-apple-system, sans-serif" font-size="10" fill="#0f172a">6. refresh thread (window.factor=0.8)</text>
+  <g stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arr3)">
+    <path d="M370,360 L110,360"/>
+  </g>
+  <text x="180" y="354" font-family="-apple-system, sans-serif" font-size="10" fill="#0f172a">7. new JWT before exp − buffer.seconds</text>
+  <!-- failure 3 -->
+  <rect x="20" y="375" width="240" height="50" rx="6" fill="#fee2e2" stroke="#dc2626"/>
+  <text x="140" y="392" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="10" font-weight="700" fill="#b91c1c">Failure 3: refresh fails</text>
+  <text x="140" y="408" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="9" fill="#7f1d1d">buffer &gt; token lifetime → refresh never scheduled</text>
+  <text x="140" y="420" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="9" fill="#7f1d1d">reconnect re-auths with expiring token</text>
+</svg>

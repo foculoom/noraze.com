@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" role="img" aria-labelledby="t1 d1">
+  <title id="t1">Spark execution model: driver, executors, stages, and tasks</title>
+  <desc id="d1">A Spark job compiles into a DAG. The DAG is sliced into stages at every shuffle (wide transformation). Each stage runs a wave of tasks — one task per partition; concurrency is bounded by available executor cores.</desc>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 z" fill="#1f2937"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="420" fill="#fafafa"/>
+  <!-- Driver -->
+  <g font-family="-apple-system, sans-serif" font-size="12" fill="#0f172a">
+    <rect x="350" y="20" width="200" height="50" rx="8" fill="#fef3c7" stroke="#d97706"/>
+    <text x="450" y="44" text-anchor="middle" font-weight="700">Driver</text>
+    <text x="450" y="62" text-anchor="middle" font-size="10" fill="#4b5563">builds DAG · schedules tasks</text>
+  </g>
+  <!-- DAG label -->
+  <text x="40" y="110" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#0f172a">DAG (your DataFrame code) → sliced into stages at shuffles</text>
+  <!-- Stage 0 -->
+  <g font-family="-apple-system, sans-serif" font-size="12" fill="#0f172a">
+    <rect x="40" y="130" width="200" height="100" rx="8" fill="#e0e7ff" stroke="#6366f1"/>
+    <text x="140" y="152" text-anchor="middle" font-weight="700">Stage 0 (narrow)</text>
+    <text x="140" y="170" text-anchor="middle" font-size="10" fill="#4b5563">read · filter · map (pipelined)</text>
+    <text x="140" y="195" text-anchor="middle" font-size="10" fill="#475569">tasks = #partitions</text>
+    <text x="140" y="212" text-anchor="middle" font-size="10" fill="#475569">concurrency ≤ #executors × #cores</text>
+  </g>
+  <!-- Shuffle 1 -->
+  <g font-family="-apple-system, sans-serif" font-size="11" fill="#dc2626">
+    <text x="280" y="176" text-anchor="middle">shuffle</text>
+    <text x="280" y="189" text-anchor="middle" font-size="9">(wide)</text>
+  </g>
+  <path d="M240,180 L320,180" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <!-- Stage 1 -->
+  <g font-family="-apple-system, sans-serif" font-size="12" fill="#0f172a">
+    <rect x="320" y="130" width="200" height="100" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="420" y="152" text-anchor="middle" font-weight="700">Stage 1 (reduce)</text>
+    <text x="420" y="170" text-anchor="middle" font-size="10" fill="#4b5563">groupBy · agg</text>
+    <text x="420" y="195" text-anchor="middle" font-size="10" fill="#475569">shuffle read</text>
+    <text x="420" y="212" text-anchor="middle" font-size="10" fill="#475569">concurrency ≤ #executors × #cores</text>
+  </g>
+  <!-- Shuffle 2 -->
+  <g font-family="-apple-system, sans-serif" font-size="11" fill="#dc2626">
+    <text x="560" y="176" text-anchor="middle">shuffle</text>
+    <text x="560" y="189" text-anchor="middle" font-size="9">(wide)</text>
+  </g>
+  <path d="M520,180 L600,180" stroke="#dc2626" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <!-- Stage 2 -->
+  <g font-family="-apple-system, sans-serif" font-size="12" fill="#0f172a">
+    <rect x="600" y="130" width="200" height="100" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="700" y="152" text-anchor="middle" font-weight="700">Stage 2 (reduce)</text>
+    <text x="700" y="170" text-anchor="middle" font-size="10" fill="#4b5563">orderBy · final result</text>
+    <text x="700" y="195" text-anchor="middle" font-size="10" fill="#475569">shuffle read</text>
+    <text x="700" y="212" text-anchor="middle" font-size="10" fill="#475569">concurrency ≤ #executors × #cores</text>
+  </g>
+  <!-- Executors with tasks -->
+  <text x="40" y="270" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Executors (tasks run on cores; one task per partition; cores bound concurrency)</text>
+  <g font-family="-apple-system, sans-serif" font-size="11" fill="#0f172a">
+    <!-- Exec A -->
+    <rect x="40" y="285" width="160" height="70" rx="8" fill="#f1f5f9" stroke="#475569"/>
+    <text x="120" y="305" text-anchor="middle" font-weight="700">Executor A</text>
+    <rect x="52" y="318" width="30" height="28" rx="4" fill="#6366f1"/><text x="67" y="337" text-anchor="middle" font-size="9" fill="#fff">t1</text>
+    <rect x="86" y="318" width="30" height="28" rx="4" fill="#6366f1"/><text x="101" y="337" text-anchor="middle" font-size="9" fill="#fff">t2</text>
+    <rect x="120" y="318" width="30" height="28" rx="4" fill="#6366f1"/><text x="135" y="337" text-anchor="middle" font-size="9" fill="#fff">t3</text>
+    <rect x="154" y="318" width="30" height="28" rx="4" fill="#6366f1"/><text x="169" y="337" text-anchor="middle" font-size="9" fill="#fff">t4</text>
+    <!-- Exec B -->
+    <rect x="220" y="285" width="160" height="70" rx="8" fill="#f1f5f9" stroke="#475569"/>
+    <text x="300" y="305" text-anchor="middle" font-weight="700">Executor B</text>
+    <rect x="232" y="318" width="30" height="28" rx="4" fill="#16a34a"/><text x="247" y="337" text-anchor="middle" font-size="9" fill="#fff">t1</text>
+    <rect x="266" y="318" width="30" height="28" rx="4" fill="#16a34a"/><text x="281" y="337" text-anchor="middle" font-size="9" fill="#fff">t2</text>
+    <rect x="300" y="318" width="30" height="28" rx="4" fill="#16a34a"/><text x="315" y="337" text-anchor="middle" font-size="9" fill="#fff">t3</text>
+    <rect x="334" y="318" width="30" height="28" rx="4" fill="#16a34a"/><text x="349" y="337" text-anchor="middle" font-size="9" fill="#fff">t4</text>
+    <!-- Exec C -->
+    <rect x="400" y="285" width="160" height="70" rx="8" fill="#f1f5f9" stroke="#475569"/>
+    <text x="480" y="305" text-anchor="middle" font-weight="700">Executor C</text>
+    <rect x="412" y="318" width="30" height="28" rx="4" fill="#d97706"/><text x="427" y="337" text-anchor="middle" font-size="9" fill="#fff">t1</text>
+    <rect x="446" y="318" width="30" height="28" rx="4" fill="#d97706"/><text x="461" y="337" text-anchor="middle" font-size="9" fill="#fff">t2</text>
+    <rect x="480" y="318" width="30" height="28" rx="4" fill="#d97706"/><text x="495" y="337" text-anchor="middle" font-size="9" fill="#fff">t3</text>
+    <rect x="514" y="318" width="30" height="28" rx="4" fill="#d97706"/><text x="529" y="337" text-anchor="middle" font-size="9" fill="#fff">t4</text>
+  </g>
+  <!-- Key insight -->
+  <text x="40" y="390" font-family="-apple-system, sans-serif" font-size="11" fill="#475569">tasks per stage = #partitions; concurrent tasks ≤ #executors × #cores (capped by #partitions). Shuffles (wide transforms) create stage boundaries.</text>
+</svg>

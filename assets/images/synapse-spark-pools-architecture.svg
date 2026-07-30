@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" role="img" aria-labelledby="t1 d1">
+  <title id="t1">Azure Synapse Analytics: pool types and the Synapse/Spark boundary</title>
+  <desc id="d1">A Synapse workspace contains several pool types (dedicated SQL, serverless SQL, Apache Spark, pipelines). The Spark pool is provisioned with node size, count range, and autoscale. Synapse controls provisioning; Spark controls execution.</desc>
+  <rect width="900" height="460" fill="#fafafa"/>
+  <!-- Workspace -->
+  <rect x="20" y="20" width="860" height="120" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="450" y="45" text-anchor="middle" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Synapse Workspace (top-level container)</text>
+  <g font-family="-apple-system, sans-serif" font-size="11" fill="#0f172a">
+    <rect x="40" y="60" width="190" height="65" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="135" y="82" text-anchor="middle" font-weight="700">Dedicated SQL pool</text>
+    <text x="135" y="100" text-anchor="middle" font-size="10" fill="#475569">provisioned MPP DWU</text>
+    <text x="135" y="115" text-anchor="middle" font-size="10" fill="#475569">structured analytics</text>
+
+    <rect x="245" y="60" width="190" height="65" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="340" y="82" text-anchor="middle" font-weight="700">Serverless SQL pool</text>
+    <text x="340" y="100" text-anchor="middle" font-size="10" fill="#475569">pay-per-query T-SQL</text>
+    <text x="340" y="115" text-anchor="middle" font-size="10" fill="#475569">over data lake</text>
+
+    <rect x="450" y="60" width="190" height="65" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="545" y="82" text-anchor="middle" font-weight="700">Apache Spark pool</text>
+    <text x="545" y="100" text-anchor="middle" font-size="10" fill="#475569">managed Spark cluster</text>
+    <text x="545" y="115" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="700">(this post)</text>
+
+    <rect x="655" y="60" width="205" height="65" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="757" y="82" text-anchor="middle" font-weight="700">Pipelines / IR</text>
+    <text x="757" y="100" text-anchor="middle" font-size="10" fill="#475569">data movement</text>
+    <text x="757" y="115" text-anchor="middle" font-size="10" fill="#475569">orchestration</text>
+  </g>
+  <!-- Spark pool detail -->
+  <text x="20" y="170" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Spark pool provisioning (Synapse controls this)</text>
+  <g font-family="-apple-system, sans-serif" font-size="11" fill="#0f172a">
+    <rect x="40" y="185" width="180" height="90" rx="8" fill="#f1f5f9" stroke="#475569"/>
+    <text x="130" y="207" text-anchor="middle" font-weight="700">Node size family</text>
+    <text x="130" y="225" text-anchor="middle" font-size="10" fill="#475569">memory vs compute</text>
+    <text x="130" y="245" text-anchor="middle" font-size="10" fill="#475569">optimized SKU</text>
+
+    <rect x="240" y="185" width="180" height="90" rx="8" fill="#f1f5f9" stroke="#475569"/>
+    <text x="330" y="207" text-anchor="middle" font-weight="700">Node count (min–max)</text>
+    <text x="330" y="225" text-anchor="middle" font-size="10" fill="#475569">autoscale range</text>
+    <text x="330" y="245" text-anchor="middle" font-size="10" fill="#475569">head + workers</text>
+
+    <rect x="440" y="185" width="180" height="90" rx="8" fill="#f1f5f9" stroke="#475569"/>
+    <text x="530" y="207" text-anchor="middle" font-weight="700">Spark runtime</text>
+    <text x="530" y="225" text-anchor="middle" font-size="10" fill="#475569">version Synapse</text>
+    <text x="530" y="245" text-anchor="middle" font-size="10" fill="#475569">supports (pinned)</text>
+
+    <rect x="640" y="185" width="220" height="90" rx="8" fill="#fef3c7" stroke="#d97706"/>
+    <text x="750" y="207" text-anchor="middle" font-weight="700">Autoscale + Dynamic allocation</text>
+    <text x="750" y="225" text-anchor="middle" font-size="10" fill="#475569">pool: #nodes (Synapse)</text>
+    <text x="750" y="245" text-anchor="middle" font-size="10" fill="#475569">dynamic: #executors (Spark)</text>
+  </g>
+  <!-- Boundary -->
+  <text x="20" y="305" font-family="-apple-system, sans-serif" font-size="14" font-weight="700" fill="#0f172a">The Synapse / Spark boundary (which layer owns the failure)</text>
+  <g font-family="-apple-system, sans-serif" font-size="11" fill="#0f172a">
+    <rect x="40" y="320" width="400" height="80" rx="8" fill="#dbeafe" stroke="#2563eb"/>
+    <text x="240" y="342" text-anchor="middle" font-weight="700">Synapse controls</text>
+    <text x="60" y="362" font-size="10" fill="#475569">· pool provisioning · node sizing · autoscaling</text>
+    <text x="60" y="378" font-size="10" fill="#475569">· Spark runtime version · workspace identity</text>
+    <text x="60" y="394" font-size="10" fill="#475569">· Linked Services · notebook / monitoring UI</text>
+
+    <rect x="460" y="320" width="400" height="80" rx="8" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="660" y="342" text-anchor="middle" font-weight="700">Spark controls</text>
+    <text x="480" y="362" font-size="10" fill="#475569">· DAG · stages · tasks · executor memory layout</text>
+    <text x="480" y="378" font-size="10" fill="#475569">· shuffle behavior · partitioning</text>
+    <text x="480" y="394" font-size="10" fill="#475569">· connector code · JAAS / SASL security config</text>
+  </g>
+  <text x="40" y="430" font-family="-apple-system, sans-serif" font-size="11" fill="#475569">Diagnosis rule: a FetchFailedException is Spark-side (tune Spark config); a pool too small to run the job is Synapse-side (raise node count / fix autoscale).</text>
+  <text x="40" y="448" font-family="-apple-system, sans-serif" font-size="11" fill="#475569">Linked Services keep credentials out of notebooks — Synapse resolves the credential, your Spark job receives a token.</text>
+</svg>

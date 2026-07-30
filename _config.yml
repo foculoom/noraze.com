@@ -1,0 +1,30 @@
+title: "Noraze — Deep dives on AI, autonomy, and the systems that make them sustainable"
+description: "Personal blog exploring AI, autonomy, and developer workflows"
+url: "https://noraze.com"
+baseurl: ""
+
+# Build settings
+theme: minima
+markdown: kramdown
+highlighter: rouge
+
+# Navigation pages (Minima header_pages)
+header_pages:
+  - search.md
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+# Pagination (optional, add jekyll-paginate to Gemfile to enable)
+# paginate: 5
+# paginate_path: "/page:num/"
