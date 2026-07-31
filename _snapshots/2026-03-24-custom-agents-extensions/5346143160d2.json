@@ -1,0 +1,10 @@
+{
+  "source_url": "https://docs.github.com/en/copilot/creating-copilot-extensions",
+  "capture_date": "2026-07-31T15:13:43.394575+00:00",
+  "http_status": 404,
+  "error_detail": null,
+  "anchor_text": "Copilot Extensions documentation",
+  "cited_passage": "If you are interested in building a Copilot extension:\n1. Read the [Copilot Extensions documentation](https://docs.github.com/en/copilot/creating-copilot-extensions)\n2. Clone the extension template repo\n3. Build a tool for your team's most-used internal API\n4. Pilot it with 5 developers\n5. Iterate based on feedback",
+  "wayback_url": null,
+  "wayback_date": null
+}

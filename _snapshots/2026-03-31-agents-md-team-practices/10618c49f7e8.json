@@ -1,0 +1,10 @@
+{
+  "source_url": "https://admin.yourdomain.com",
+  "capture_date": "2026-07-31T15:14:15.501550+00:00",
+  "http_status": "error:URLError",
+  "error_detail": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'admin.yourdomain.com'. (_ssl.c:1006)",
+  "anchor_text": "https://admin.yourdomain.com",
+  "cited_passage": "https://admin.yourdomain.com",
+  "wayback_url": "http://web.archive.org/web/20170619204039/http://admin.yourdomain.com:80/",
+  "wayback_date": "2017-06-19T20:40:39"
+}
