@@ -45,7 +45,13 @@ URLs, or outdated product claims. This is good prior coverage.
 | developer.apple.com | 3 | SwiftUI/StoreKit/Xcode doc URL changes |
 | code.visualstudio.com | 3 | VS Code docs reorganized (agents page) |
 | docs.github.com | 2 | Copilot extensions/docs reorganized |
-| eventhubs.azure.net | 0 | (URL error, not 404) |
+| other (single) | 3 | Individual 404s across various docs |
+
+### Non-404 Links (not counted as dead)
+
+- 5 `example.com`/`yourdomain.com` placeholder URLs (illustrative, not real
+  citations)
+- 4 HTTP 429 (Godot docs rate-limited the audit; likely live, re-verify later)
 
 ### Recommendations
 
