@@ -1,0 +1,10 @@
+{
+  "source_url": "https://eventhubs.azure.net/",
+  "capture_date": "2026-07-31T15:16:20.559014+00:00",
+  "http_status": "error:URLError",
+  "error_detail": "[Errno 8] nodename nor servname provided, or not known",
+  "anchor_text": "https://eventhubs.azure.net/",
+  "cited_passage": "https://eventhubs.azure.net/",
+  "wayback_url": null,
+  "wayback_date": null
+}

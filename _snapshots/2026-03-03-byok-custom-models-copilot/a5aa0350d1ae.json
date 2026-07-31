@@ -1,0 +1,10 @@
+{
+  "source_url": "https://your-internal-api.example.com",
+  "capture_date": "2026-07-31T15:12:48.397372+00:00",
+  "http_status": "error:URLError",
+  "error_detail": "[Errno 8] nodename nor servname provided, or not known",
+  "anchor_text": "https://your-internal-api.example.com",
+  "cited_passage": "https://your-internal-api.example.com",
+  "wayback_url": null,
+  "wayback_date": null
+}
